@@ -29,11 +29,6 @@ class AttributionController extends AbstractController
         $date->format('yyyy-MM-dd');
         $date->setDate($explodeDate[0], $explodeDate[1], $explodeDate[2]);
 
-        $explodeSchedule = explode(':', $datas['schedule']);
-        $time = new DateTime();
-        $time->format('HH');
-        $time->setTime($explodeSchedule[0], $explodeSchedule[1]);
-
         /** @var Computer $computer */
         $computer = $this->getDoctrine()
             ->getRepository(Computer::class)
@@ -58,7 +53,7 @@ class AttributionController extends AbstractController
         $attribution->setDate($date);
         $attribution->setComputer($computer);
         $attribution->setCustomer($customer);
-        $attribution->setSchedule($time);
+        $attribution->setSchedule($datas['schedule']);
 
         $entityManager = $this->getDoctrine()->getManager();
 

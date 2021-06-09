@@ -47,7 +47,7 @@ class Attribution
     private $computer;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string")
      * @ORM\JoinColumn(nullable=false)
      *
      * @Groups({"assignement"})
@@ -95,12 +95,12 @@ class Attribution
         return $this;
     }
 
-    public function getSchedule(): ?\DateTimeInterface
+    public function getSchedule(): ?string
     {
         return $this->schedule;
     }
 
-    public function setSchedule(\DateTimeInterface $schedule): self
+    public function setSchedule(string $schedule): self
     {
         $this->schedule = $schedule;
 
