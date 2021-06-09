@@ -95,12 +95,12 @@ class Attribution
         return $this;
     }
 
-    public function getSchedule(): ?string
+    public function getSchedule(): ?int
     {
         return $this->schedule;
     }
 
-    public function setSchedule(string $schedule): self
+    public function setSchedule(int $schedule): self
     {
         $this->schedule = $schedule;
 

@@ -14,31 +14,43 @@ use Symfony\Component\Routing\Annotation\Route;
 class AttributionController extends AbstractController
 {
     /**
-     * @Route("/api/assignement/create", name="assignCustomerToComputer", methods={"POST"})
+     * @Route("/api/assignement", name="listAssignment", methods={"GET"})
+     */
+    public function listAssignment(): Response
+    {
+        $assignment = $this->getDoctrine()
+            ->getRepository(Attribution::class)
+            ->findAll()
+        ;
+
+        return $this->json($assignment);
+    }
+
+    /**
+     * @Route("/api/assignement", name="assignCustomerToComputer", methods={"POST"})
      */
     public function assignCustomerToComputer(Request $request): Response
     {
         $datas = $request->request->all();
 
+        dump($datas);
+
         if (!$datas) {
             return new Response('Error!');
         }
 
-        $explodeDate = explode('-', $datas['date']);
-        $date = new DateTime();
-        $date->format('yyyy-MM-dd');
-        $date->setDate($explodeDate[0], $explodeDate[1], $explodeDate[2]);
+        $date = strtotime($datas['date']);
 
         /** @var Computer $computer */
         $computer = $this->getDoctrine()
             ->getRepository(Computer::class)
-            ->find($datas['computer_id'])
+            ->find($datas['computer'])
         ;
 
         /** @var Customer $customer */
         $customer = $this->getDoctrine()
             ->getRepository(Customer::class)
-            ->find($datas['client_id'])
+            ->find($datas['customer'])
         ;
 
         if(!$computer) {
@@ -50,7 +62,7 @@ class AttributionController extends AbstractController
         }
 
         $attribution = new Attribution();
-        $attribution->setDate($date);
+        $attribution->setDate(date('d/M/Y', $date));
         $attribution->setComputer($computer);
         $attribution->setCustomer($customer);
         $attribution->setSchedule($datas['schedule']);

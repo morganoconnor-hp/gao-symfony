@@ -32,7 +32,7 @@ class ComputerController extends AbstractController
         $datas = $request->request->all();
 
         if (!$datas) {
-            return new Response('Error!');
+            return new Response('Request is empty!');
         }
 
         $computer = $this->getDoctrine()
