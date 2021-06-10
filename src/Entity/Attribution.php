@@ -9,7 +9,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AttributionRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={
+ *          "groups"={"assignement", "computer", "customer"}
+ *     }
+ * )
  */
 class Attribution
 {
@@ -18,15 +22,15 @@ class Attribution
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @Groups({"assignement"})
+     * @Groups({"assignement", "computer", "customer"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Groups({"assignement"})
+     * @Groups({"assignement", "computer", "customer"})
      */
     private $date;
 
@@ -34,7 +38,7 @@ class Attribution
      * @ORM\ManyToOne(targetEntity=Customer::class)
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Groups({"assignement"})
+     * @Groups({"assignement", "computer", "customer"})
      */
     private $customer;
 
@@ -42,7 +46,7 @@ class Attribution
      * @ORM\ManyToOne(targetEntity=Computer::class)
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Groups({"assignement"})
+     * @Groups({"assignement", "computer", "customer"})
      */
     private $computer;
 
@@ -50,7 +54,7 @@ class Attribution
      * @ORM\Column(type="string")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @Groups({"assignement"})
+     * @Groups({"assignement", "computer", "customer"})
      */
     private $schedule;
 
@@ -59,12 +63,12 @@ class Attribution
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(string $date): self
     {
         $this->date = $date;
 

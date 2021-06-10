@@ -5,7 +5,6 @@ namespace App\Controller\Attribution;
 use App\Entity\Attribution;
 use App\Entity\Computer;
 use App\Entity\Customer;
-use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AttributionController extends AbstractController
 {
     /**
-     * @Route("/api/assignement", name="listAssignment", methods={"GET"})
+     * @Route("/api/attributions", name="listAssignment", methods={"GET"})
      */
     public function listAssignment(): Response
     {
@@ -27,13 +26,11 @@ class AttributionController extends AbstractController
     }
 
     /**
-     * @Route("/api/assignement", name="assignCustomerToComputer", methods={"POST"})
+     * @Route("/api/attribution", name="assignCustomerToComputer", methods={"POST"})
      */
     public function assignCustomerToComputer(Request $request): Response
     {
         $datas = $request->request->all();
-
-        dump($datas);
 
         if (!$datas) {
             return new Response('Error!');
